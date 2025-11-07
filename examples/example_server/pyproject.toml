@@ -1,0 +1,72 @@
+[project]
+name = "example-mcp-server"
+version = "0.1.0"
+description = "Example MCP server using mcp-server-core"
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+    "mcp-server-core>=0.1.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+    "pytest-cov>=7.0.0",
+    "coverage[toml]>=7.11.0",
+    "ruff>=0.14.2",
+]
+
+[tool.ruff]
+line-length = 150
+target-version = "py314"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = [
+    "--cov=tools",
+    "--cov=server",
+    "--cov-report=term-missing",
+    "--cov-report=html:coverage/html",
+    "--cov-report=xml:coverage/coverage.xml",
+    "--cov-branch",
+    "-v",
+]
+
+[tool.coverage.run]
+source = ["tools", "server"]
+branch = true
+data_file = "coverage/.coverage"
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+    "*/*.egg-info/*",
+    "*/.pytest_cache/*",
+    "*/.venv/*",
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+]
+
+[tool.coverage.html]
+directory = "coverage/html"
+
+[tool.coverage.xml]
+output = "coverage/coverage.xml"

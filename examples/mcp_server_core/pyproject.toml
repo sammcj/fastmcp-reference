@@ -1,0 +1,101 @@
+[project]
+name = "mcp-server-core"
+version = "0.1.0"
+description = "Reusable foundational components for building production-ready MCP servers"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "MCP Server Core Contributors" }
+]
+license = "MIT"
+
+dependencies = [
+    "fastmcp>=2.13.0.1",
+    "pydantic>=2.12.3",
+    "pydantic-settings>=2.11",
+    "aiofiles>=25.1.0",
+]
+
+[project.optional-dependencies]
+# Observability stack (optional, enable via config)
+observability = [
+    "opentelemetry-api>=1.38",
+    "opentelemetry-sdk>=1.38",
+    "opentelemetry-exporter-otlp>=1.38",
+    "prometheus-client>=0.23.1",
+]
+
+# Security abstractions (optional)
+security = [
+    "llm-sandbox>=0.3.23",
+]
+
+# Development dependencies
+dev = [
+    "pytest>=8.4.2",
+    "pytest-asyncio>=1.2.0",
+    "pytest-cov>=7.0.0",
+    "coverage[toml]>=7.11.0",
+    "ruff>=0.14.2",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mcp_server_core*"]
+exclude = ["tests*", "coverage*"]
+
+[tool.ruff]
+line-length = 150
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W"]
+ignore = ["E501"]  # Line too long (handled by formatter)
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = [
+    "--cov=mcp_server_core",
+    "--cov-report=term-missing",
+    "--cov-report=html:coverage/html",
+    "--cov-report=xml:coverage/coverage.xml",
+    "--cov-branch",
+    "-v",
+]
+
+[tool.coverage.run]
+source = ["mcp_server_core"]
+branch = true
+data_file = "coverage/.coverage"
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+    "*/*.egg-info/*",
+    "*/.pytest_cache/*",
+    "*/.venv/*",
+]
+
+[tool.coverage.report]
+precision = 2
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+]
+
+[tool.coverage.html]
+directory = "coverage/html"
+
+[tool.coverage.xml]
+output = "coverage/coverage.xml"

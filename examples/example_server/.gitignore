@@ -1,0 +1,58 @@
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+*.coverage
+coverage.xml
+
+# Python
+__pycache__
+__pycache__/
+.eggs/
+.installed.cfg
+.pytest_cache
+.Python
+*.egg
+*.egg-info
+*.egg-info/
+*.py[cod]
+*.pyc
+*.pyo
+*.so
+*$py.class
+.ruff_cache
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+pytest_cache
+sdist/
+var/
+wheels/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Misc
+*.bak
+*.log
+*.tmp
+tmp
+tmp_*
+.DS_Store
